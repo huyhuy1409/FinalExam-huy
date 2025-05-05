@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="flex justify-center items-center min-h-screen bg-gray-100">
+    <div class="bg-white flex flex-col items-center p-4 rounded-2xl shadow w-full max-w-[1090px]">
+      <div class="rounded-md mt-5 w-36 shadow h-10 bg-green-500 text-white font-bold flex items-center justify-center text-lg cursor-pointer" id="startButton">
+        Bắt Đầu
+      </div>
+      <div class=" hidden rounded-md mt-5 w-36 shadow h-10 bg-red-500 text-white font-bold flex items-center justify-center text-lg cursor-pointer" id="endButton">
+        Kết Thúc
+     </div>
+     <div id="winModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div class="bg-white p-6 rounded-lg text-center">
+        <h2 class="text-2xl font-bold text-green-500">You Win!</h2>
+        <p class="mt-4 text-lg">Congratulations, you solved the puzzle!</p>
+        <button id="closeWinModal" class="mt-4 bg-green-500 text-white p-2 rounded-lg hover:bg-green-400 focus:outline-none">Close</button>
+      </div>
+    </div>
+      <div class="flex flex-col md:flex-row gap-5 mt-8 w-full justify-center ">
+        <div class="grid grid-cols-3 sm:grid-cols-4 gap-4 bg-gray-100 rounded-xl p-4">
+          <div class="w-20 h-20 tile sm:w-[120px] sm:h-[120px] md:w-[150px] md:h-[150px] rounded-md font-bold shadow flex items-center justify-center bg-green-100 text-green-500">1</div>
+          <div class="w-20 h-20 tile sm:w-[120px] sm:h-[120px] md:w-[150px] md:h-[150px] rounded-md font-bold shadow flex items-center justify-center bg-red-100 text-red-500">2</div>
+          <div class="w-20 h-20 tile sm:w-[120px] sm:h-[120px] md:w-[150px] md:h-[150px] rounded-md font-bold shadow flex items-center justify-center bg-blue-100 text-blue-500">3</div>
+          <div class="w-20 h-20 tile sm:w-[120px] sm:h-[120px] md:w-[150px] md:h-[150px] rounded-md font-bold shadow flex items-center justify-center bg-purple-100 text-purple-500">4</div>
+          <div class="w-20 h-20  tile sm:w-[120px] sm:h-[120px] md:w-[150px] md:h-[150px] rounded-md font-bold shadow flex items-center justify-center bg-pink-100 text-pink-500">5</div>
+          <div class="w-20 h-20  tile sm:w-[120px] sm:h-[120px] md:w-[150px] md:h-[150px] rounded-md font-bold shadow flex items-center justify-center bg-yellow-100 text-yellow-500">6</div>
+          <div class="w-20 h-20 tile sm:w-[120px] sm:h-[120px] md:w-[150px] md:h-[150px] rounded-md font-bold shadow flex items-center justify-center bg-indigo-100 text-indigo-500">7</div>
+          <div class="w-20 h-20 tile sm:w-[120px] sm:h-[120px] md:w-[150px] md:h-[150px] rounded-md font-bold shadow flex items-center justify-center bg-gray-100 text-gray-500">8</div>
+          <div class="w-20 h-20 tile sm:w-[120px] sm:h-[120px] md:w-[150px] md:h-[150px] rounded-md font-bold shadow flex items-center justify-center bg-emerald-100 text-emerald-500">9</div>
+          <div class="w-20 h-20 tile sm:w-[120px] sm:h-[120px] md:w-[150px] md:h-[150px] rounded-md font-bold shadow flex items-center justify-center bg-amber-100 text-amber-500">10</div>
+          <div class="w-20 h-20 tile sm:w-[120px] sm:h-[120px] md:w-[150px] md:h-[150px] rounded-md font-bold shadow flex items-center justify-center bg-lime-100 text-lime-500">11</div>
+          <div class="w-20 h-20 tile sm:w-[120px] sm:h-[120px] md:w-[150px] md:h-[150px] rounded-md shadow flex items-center justify-center bg-black text-white"></div>
+        </div>
+        <div class="flex flex-col gap-6 w-full sm:w-auto">
+          <div class="bg-green-100 shadow flex items-center justify-center flex-col gap-1 w-full sm:w-[150px] h-[90px] rounded-md">
+            <div class="text-sm font-bold">Đồng Hồ</div>
+            <div class="text-xl sm:text-2xl font-bold" id="timer">0:00</div>
+          </div>
+          <div class="w-full sm:w-[150px] rounded-md flex flex-col h-[240px] shadow justify-center items-center gap-1 bg-gray-100">
+            <p class="text-[10px] font-bold">Hướng Dẫn Di Chuyển</p>
+            <div class="flex flex-col items-center gap-1">
+              <div class="bg-gray-300 flex justify-center items-center rounded-sm w-10 h-10 font-bold">↑</div>
+              <div class="flex gap-1">
+                <div class="bg-gray-300 flex justify-center items-center rounded-sm w-10 h-10 font-bold">←</div>
+                <div class="bg-gray-300 flex justify-center items-center rounded-sm w-10 h-10 font-bold">↓</div>
+                <div class="bg-gray-300 flex justify-center items-center rounded-sm w-10 h-10 font-bold">→</div>
+              </div>
+            </div>
+            <div class="flex flex-col items-center gap-1 mt-2">
+              <div class="bg-gray-300 flex justify-center items-center rounded-sm w-10 h-10 font-bold">W</div>
+              <div class="flex gap-1">
+                <div class="bg-gray-300 flex justify-center items-center rounded-sm w-10 h-10 font-bold">A</div>
+                <div class="bg-gray-300 flex justify-center items-center rounded-sm w-10 h-10 font-bold">S</div>
+                <div class="bg-gray-300 flex justify-center items-center rounded-sm w-10 h-10 font-bold">D</div>
+              </div>
+            </div>
+          </div>
+  
+        </div>
+      </div>
+      <div class="bg-gray-100 rounded-xl p-4 w-full mt-8 overflow-x-auto">
+        <h2 class="text-gray-700 text-center font-semibold mb-4">Lịch Sử Lượt Chơi</h2>
+        <table class="min-w-full text-left shadow">
+          <thead>
+            <tr class="bg-gray-200">
+              <th class="px-4 py-2">#</th>
+              <th class="px-4 py-2">Bước đi</th>
+              <th class="px-4 py-2">Thời Gian</th>
+            </tr>
+          </thead>
+          <tbody id="moveHistory">
+          </tbody>
+        </table>
+      </div>
+     </div>
+     <script src="Thicuoiki.js"></script>
+</body>
+  
+</html>
